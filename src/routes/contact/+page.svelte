@@ -1,18 +1,18 @@
 <script lang="ts">
-	// added this to stop typescript beefing.
-	interface FormData {
-		data: {
-			name: string;
-			email: string;
-			message: string;
-		};
-		errors: {
-			name: string;
-			email: string;
-			message: string;
-		};
-	}
-	export let form: FormData;
+	// Note how we can import this type - the TS compiler picks it up
+	// from the +page.server.ts file. This is the output of what is returned
+	// from the actions.
+	import type { ActionData } from './$types';
+
+	// the 'form' variable gets types by ActionData
+	// Note here that if you get a type hint, the 'errors' property is nullable.
+	// If something in your '+page.server.ts' file throws an expected error
+	// inside a form action, the results will show up here. Also any returned data
+	// from a form action will show up here. You can try putting this variable in a
+	// console.log and then watching your browser console and trying to submit bad data,
+	// and you'll see the shape of this. It looks like you have the right idea on
+	// line 22 below.
+	export let form: ActionData;
 </script>
 
 <div class="mx-auto sm:w-[600px] w-96 p-6">
